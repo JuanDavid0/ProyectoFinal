@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Avanzado de NPCs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/npc_styles.css') }}">
+</head>
+<body>
+    <div class="character-sheet-container">
+        <header>
+            <h1>Generador de Personajes No Jugables</h1>
+        </header>
+        
+        <div class="npc-display-area">
+            <div class="npc-attribute" id="npc-identidad">
+                <h2>Identidad</h2>
+                <p>Cargando...</p>
+            </div>
+            <div class="npc-attribute" id="npc-apariencia">
+                <h2>Apariencia</h2>
+                <p>Cargando...</p>
+            </div>
+            <div class="npc-attribute" id="npc-personalidad">
+                <h2>Personalidad</h2>
+                <p>Cargando...</p>
+            </div>
+            <div class="npc-attribute" id="npc-trasfondo">
+                <h2>Trasfondo</h2>
+                <p>Cargando...</p>
+            </div>
+            <div class="npc-attribute" id="npc-motivaciones">
+                <h2>Motivaciones</h2>
+                <p>Cargando...</p>
+            </div>
+            <div class="npc-attribute" id="npc-gancho">
+                <h2>Gancho de Aventura</h2>
+                <p>Cargando...</p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="generate-npc-btn" class="action-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24" style="margin-right: 8px;"><path d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM13 7V11H17V13H13V17H11V13H7V11H11V7H13Z"></path></svg>
+                Generar Nuevo NPC
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function displayNPC(description) {
+            // Simple split by ". " - assumes sentences end this way.
+            // You might need a more robust way if sentences can end with other punctuation.
+            const parts = description.split(/\.\s+/).map(part => part.trim()).filter(part => part.length > 0);
+
+            const fields = {
+                "npc-identidad": document.querySelector("#npc-identidad p"),
+                "npc-apariencia": document.querySelector("#npc-apariencia p"),
+                "npc-personalidad": document.querySelector("#npc-personalidad p"),
+                "npc-trasfondo": document.querySelector("#npc-trasfondo p"),
+                "npc-motivaciones": document.querySelector("#npc-motivaciones p"),
+                "npc-gancho": document.querySelector("#npc-gancho p")
+            };
+            
+            // Reset fields
+            for (const key in fields) {
+                if (fields[key]) fields[key].textContent = "No disponible";
+            }
+
+            // Distribute parts - this is a heuristic and depends on your grammar structure
+            // Ideally, your grammar would generate text that maps cleanly to these sections.
+            // The `npc_grammar_avanzada.gr` structure is:
+            // IDENTIDAD. APARIENCIA_GENERAL. PERSONALIDAD_DETALLADA. TRASFONDO_NPC. MOTIVACIONES_NPC. GANCHO_AVENTURA_NPC
+            if (parts.length >= 1 && fields["npc-identidad"]) fields["npc-identidad"].textContent = parts[0] + ".";
+            if (parts.length >= 2 && fields["npc-apariencia"]) fields["npc-apariencia"].textContent = parts[1] + ".";
+            if (parts.length >= 3 && fields["npc-personalidad"]) fields["npc-personalidad"].textContent = parts[2] + ".";
+            if (parts.length >= 4 && fields["npc-trasfondo"]) fields["npc-trasfondo"].textContent = parts[3] + ".";
+            if (parts.length >= 5 && fields["npc-motivaciones"]) fields["npc-motivaciones"].textContent = parts[4] + ".";
+            if (parts.length >= 6 && fields["npc-gancho"]) fields["npc-gancho"].textContent = parts[5] + ".";
+        }
+
+        document.getElementById("generate-npc-btn").addEventListener("click", async () => {
+            const button = document.getElementById("generate-npc-btn");
+            button.disabled = true;
+            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="spin-icon" width="24" height="24" style="margin-right: 8px;"><path d="M12 2.99988C16.9706 2.99988 21 7.02931 21 11.9999C21 16.9704 16.9706 20.9999 12 20.9999C7.02944 20.9999 3 16.9704 3 11.9999C3 9.17242 4.30367 6.64015 6.34267 4.99988" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Generando...';
+            
+            // Reset placeholder text
+            const fields = ["npc-identidad", "npc-apariencia", "npc-personalidad", "npc-trasfondo", "npc-motivaciones", "npc-gancho"];
+            fields.forEach(id => {
+                const pElement = document.querySelector(`#${id} p`);
+                if (pElement) pElement.textContent = "Generando...";
+            });
+
+            try {
+                const response = await fetch("/generate_npc", { method: "POST" });
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.success) {
+                    displayNPC(data.description);
+                } else {
+                    fields.forEach(id => {
+                        const pElement = document.querySelector(`#${id} p`);
+                        if (pElement) pElement.textContent = `Error: ${data.error}`;
+                    });
+                    alert(data.error);
+                }
+            } catch (error) {
+                console.error("Error en la solicitud fetch:", error);
+                 fields.forEach(id => {
+                    const pElement = document.querySelector(`#${id} p`);
+                    if (pElement) pElement.textContent = "Error al contactar el servidor.";
+                });
+                alert("Error al contactar el servidor. Revisa la consola para más detalles.");
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24" style="margin-right: 8px;"><path d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4ZM13 7V11H17V13H13V17H11V13H7V11H11V7H13Z"></path></svg>Generar Nuevo NPC';
+            }
+        });
+
+        // Initial load
+        document.getElementById("generate-npc-btn").click();
+    </script>
+</body>
+</html>

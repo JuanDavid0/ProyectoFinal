@@ -1,0 +1,34 @@
+# Entorno virtual
+venv/
+ENV/
+env/
+.venv/
+
+# Archivos bytecode de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración del entorno de desarrollo
+.vscode/
+.idea/
+
+# Archivos de log
+*.log
+
+# Archivos de dependencias generados automáticamente (si no se usan directamente)
+pip-log.txt
+
+# Archivos de compilación y cache de herramientas externas (por ejemplo, si se usa algún parser generator)
+*.out
+*.class
+*.jar
+
+# Otros
+*.swp
+*.bak
+*.tmp

@@ -1,0 +1,52 @@
+# npc_grammar_corregida.gr
+
+NPC -> IDENTIFICACION PUNTO APARIENCIA PUNTO PERSONALIDAD PUNTO TRASFONDO PUNTO MOTIVACION PUNTO GANCHO_AVENTURA
+
+# --- IDENTIFICACION ---
+IDENTIFICACION -> NOMBRE es UN_O_UNA RAZA CLASE ORIGEN_FRASE
+NOMBRE -> Aris | Borin | Caelia | Daveth | Elara | Fenrir | Gwendolyn | Hector | Isolde | Joric | Lyra | Marius | Nadia | Orin | Seraphina | Lucian | Astrid | Ronan | Kael | Arya
+UN_O_UNA -> un | una
+RAZA -> Elfo Silvano | Elfa Alta | Enano de las Montanas | Enana de las Colinas | Humano del Norte | Humana del Sur | Mediano PiesLigeros | Mediana Robusta | Dragonborn Rojo | Orco Salvaje | Tiefling Infernal
+CLASE -> Guerrero | Maga | Pícaro | Clériga | Bardo | Exploradora | Paladín | Druida | Hechicero | Monje
+ORIGEN_FRASE -> que proviene de UN_ORIGEN | #EMPTY#
+UN_ORIGEN -> un origen humilde | una cuna noble | una tribu aislada | las calles | una familia de mercaderes | un templo antiguo | una academia militar
+
+# --- APARIENCIA ---
+APARIENCIA -> Su aspecto es ASPECTO_GENERAL PUNTO Viste con ROPA y a menudo lleva OBJETO_CARACTERISTICO
+ASPECTO_GENERAL -> imponente | delicado | descuidado | pulcro | exótico | común pero con UN_RASGO_NOTABLE
+UN_RASGO_NOTABLE -> una cicatriz sobre el ojo | ojos de un color ámbar | un tatuaje tribal en el brazo | una sonrisa enigmática | una leve cojera
+ROPA -> ropajes sencillos y desgastados | una armadura brillante y bien cuidada | túnicas de hechicero bordadas con símbolos arcanos | harapos de un viajero curtido | vestimentas nobles de seda
+OBJETO_CARACTERISTICO -> un viejo mapa amarillento | un amuleto que emite un brillo tenue | un arma heredada de un ancestro | una bolsa repleta de hierbas raras | un libro encuadernado en cuero oscuro | nada que llame especialmente la atención
+
+# --- PERSONALIDAD ---
+PERSONALIDAD -> Se le conoce por ser RASGO_PRINCIPAL y a veces RASGO_SECUNDARIO PUNTO Su mayor virtud es VIRTUD_DEFINIDA COMA aunque su principal defecto es DEFECTO_DEFINIDO
+RASGO_PRINCIPAL -> valiente y decidido | cauteloso y observador | alegre y optimista | melancólico y reservado | pragmático y directo | idealista y soñador | cínico y desconfiado
+RASGO_SECUNDARIO -> un poco ingenuo | bastante astuto | algo tímido | muy hablador | un tanto arrogante | sorprendentemente humilde | ligeramente temperamental
+VIRTUD_DEFINIDA -> la lealtad | la compasión | la honestidad | la determinación | la sabiduría | la generosidad | la paciencia
+DEFECTO_DEFINIDO -> la avaricia | la cobardía | la terquedad | la impaciencia | la envidia | el orgullo desmedido | la pereza
+
+# --- TRASFONDO ---
+TRASFONDO -> EVENTO_PASADO_MARCANTE PUNTO Actualmente COMA DEDICACION_ACTUAL
+EVENTO_PASADO_MARCANTE -> Su pasado fue marcado por una tragedia familiar que lo cambió todo | En su juventud descubrió un secreto que definió su camino | Un exilio forzoso lo alejó de su hogar hace muchos años | Tuvo un encuentro sobrenatural que pocos creerían | Una amarga traición lo dejó con profundas cicatrices | Un inesperado golpe de suerte le dio una nueva oportunidad en la vida
+DEDICACION_ACTUAL -> busca una redención que parece inalcanzable | vive una vida tranquila tratando de olvidar el ayer | huye de sombras que lo persiguen sin cesar | se dedica a su labor como DESC_LABOR_DIARIA | conspira en las sombras para alcanzar sus fines ocultos
+DESC_LABOR_DIARIA -> protector de los débiles en los barrios bajos | erudito de lo arcano en una torre solitaria | guerrero mercenario al mejor postor | sanador en el templo del pueblo | artista errante en busca de inspiración
+
+# --- MOTIVACION ---
+MOTIVACION -> Su principal motivación es OBJETIVO_CENTRAL COMA pero también anhela SECRETAMENTE_OTRA_COSA PUNTO Su mayor temor es TEMOR_PRINCIPAL
+OBJETIVO_CENTRAL -> la búsqueda de un artefacto de poder inmenso | la protección de su gente a cualquier costo | alcanzar la maestría en un arte olvidado | la venganza contra aquellos que le hicieron daño | revelar una verdad que podría cambiar el mundo
+SECRETAMENTE_OTRA_COSA -> obtener el reconocimiento que siempre le fue negado | encontrar un amor que sane sus viejas heridas | acumular una vasta fortuna para asegurar su futuro | vivir una aventura que sea recordada por generaciones | dejar un legado que perdure más allá de su tiempo
+TEMOR_PRINCIPAL -> fallar en su propósito más vital | perder a los pocos seres queridos que aún le quedan | sucumbir a la oscuridad que a veces siente en su corazón | ser completamente olvidado cuando ya no esté | la opresión implacable de los tiranos
+
+# --- GANCHO DE AVENTURA ---
+GANCHO_AVENTURA -> Podría buscar aventureros para UNA_MISION_ESPECIFICA o quizás guarda UN_SECRETO_REVELADOR PUNTO POSIBLE_INTERACCION
+UNA_MISION_ESPECIFICA -> recuperar una reliquia familiar que fue robada | entregar un mensaje crucial a un contacto en tierras lejanas | investigar extraños sucesos que azotan la región | defender su comunidad de una amenaza inminente | encontrar a un ser querido que ha desaparecido misteriosamente
+UN_SECRETO_REVELADOR -> la ubicación de unas ruinas antiguas repletas de tesoros y peligros | la verdadera identidad de un poderoso y taimado antagonista | una profecía olvidada que anuncia un gran cambio para el mundo | una peligrosa conspiración que amenaza con desestabilizar el reino | la única debilidad conocida de una bestia temible que asola la comarca
+POSIBLE_INTERACCION -> Se dice que ofrece UNA_RECOMPENSA_VALIOSA a quienes lo ayuden | Es conocido por ser ALGUIEN_CAUTELOSO COMA pero puede llegar a ser UN_BUEN_ALIADO
+UNA_RECOMPENSA_VALIOSA -> una generosa recompensa en oro y joyas | un objeto mágico de considerable poder | información vital para una causa justa | el favor de una persona muy influyente en la corte
+ALGUIEN_CAUTELOSO -> una persona reservada y de muy pocas palabras con extraños | alguien que se muestra desconfiado de las intenciones ajenas al principio
+UN_BUEN_ALIADO -> un aliado leal y valeroso una vez que se gana su confianza | alguien con contactos sorprendentes y recursos inesperados
+
+# Puntuación y Vacío
+PUNTO -> .
+COMA -> ,
+#EMPTY# -> #EMPTY#
