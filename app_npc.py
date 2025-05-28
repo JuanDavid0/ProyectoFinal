@@ -30,7 +30,7 @@ current_npc_description = None
 
 @app.route("/")
 def home():
-    return render_template("npc_index.html") # Asumiendo que no cambiaste el nombre del HTML
+    return render_template("npc_index.html")
 
 @app.route("/generate_npc", methods=["POST"])
 def generate_npc_route():
@@ -47,6 +47,5 @@ def generate_npc_route():
 if __name__ == "__main__":
     if not grammar_rules and os.path.exists(grammar_full_path): # Si el archivo existe pero no se cargaron reglas
         print("El archivo de gramática existe pero no se cargaron reglas. Revise el formato del archivo o errores de parseo.")
-        # sys.exit("Saliendo debido a error en la carga de gramática.")
     
     app.run(debug=True)

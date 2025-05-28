@@ -1,13 +1,6 @@
 import sys
 import os
 
-def is_terminal(symbols):
-    """
-    Determina si un conjunto de símbolos es terminal o no.
-    Los símbolos terminales no comienzan con mayúscula.
-    """
-    return not any(symbol[0].isupper() for symbol in symbols.split())
-
 def parse_grammar(file_path: str) -> dict:
     """
     Lee un archivo de gramática y lo convierte en un diccionario de reglas.
@@ -16,7 +9,7 @@ def parse_grammar(file_path: str) -> dict:
     
     # Si estamos dentro de un ejecutable empaquetado, usa la ruta correcta
     if getattr(sys, 'frozen', False):
-        # noinspection PyProtectedMember
+        # sys._MEIPASS es el directorio temporal donde PyInstaller extrae los archivos
         file_path = os.path.join(sys._MEIPASS, file_path)
     
     try:
@@ -28,8 +21,8 @@ def parse_grammar(file_path: str) -> dict:
 
                 if "->" in line:
                     try:
-                        key, values_str = line.strip().split("->", 1) # Split only on the first "->"
-                        key = key.strip()
+                        key, values_str = line.strip().split("->", 1) # Divide la línea en clave y valores 
+                        key = key.strip() # Limpia la clave de espacios
 
                         # Divide las expansiones posibles por |
                         possible_expansions = values_str.split("|")
@@ -37,10 +30,10 @@ def parse_grammar(file_path: str) -> dict:
                         processed_expansions = []
                         for expansion_str in possible_expansions:
                             expansion_str = expansion_str.strip()
-                            if not expansion_str: # Handles truly empty productions like "RULE -> | something" or "RULE -> #EMPTY# | "
-                                processed_expansions.append([]) # Represents an empty production
+                            if not expansion_str: # Maneja producciones verdaderamente vacías como "RULE -> | something" o "RULE -> #EMPTY# | "
+                                processed_expansions.append([]) # Representa una producción vacía
                             else:
-                                processed_expansions.append(expansion_str.split())
+                                processed_expansions.append(expansion_str.split())  # Divide la expansión en símbolos individuales
 
                         # Agrega las expansiones de las reglas a la gramática
                         grammar.setdefault(key, []).extend(processed_expansions)

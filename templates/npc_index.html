@@ -61,9 +61,6 @@
     </div>
 
     <script>
-        // Intenta hacer coincidir las secciones con las frases generadas por la gramática.
-        // Esto asume que la gramática npc_grammar_corregida.gr genera 6 frases principales
-        // separadas por ". " (PUNTO seguido de espacio).
         function displayNPC(fullDescription) {
             const sections = {
                 nombre: document.getElementById('npc-nombre'),
@@ -90,14 +87,6 @@
             // Dividir la descripción en frases principales basadas en ". "
             // Esto es una heurística y depende fuertemente de la estructura de la gramática.
             const parts = fullDescription.split(/\.\s+/).map(part => part.trim()).filter(part => part.length > 0);
-            
-            // Ejemplo de asignación:
-            // 1. IDENTIFICACION -> NOMBRE es UN_O_UNA RAZA CLASE ORIGEN_FRASE
-            // 2. APARIENCIA -> Su aspecto es ASPECTO_GENERAL PUNTO Viste con ROPA y a menudo lleva OBJETO_CARACTERISTICO
-            // 3. PERSONALIDAD -> Se le conoce por ser RASGO_PRINCIPAL y a veces RASGO_SECUNDARIO PUNTO Su mayor virtud es VIRTUD_DEFINIDA COMA aunque su principal defecto es DEFECTO_DEFINIDO
-            // 4. TRASFONDO -> EVENTO_PASADO_MARCANTE PUNTO Actualmente COMA DEDICACION_ACTUAL
-            // 5. MOTIVACION -> Su principal motivación es OBJETIVO_CENTRAL COMA pero también anhela SECRETAMENTE_OTRA_COSA PUNTO Su mayor temor es TEMOR_PRINCIPAL
-            // 6. GANCHO_AVENTURA -> Podría buscar aventureros para UNA_MISION_ESPECIFICA o quizás guarda UN_SECRETO_REVELADOR PUNTO POSIBLE_INTERACCION
 
             if (parts[0]) {
                 // Intentar extraer el nombre y el resto de la descripción básica
